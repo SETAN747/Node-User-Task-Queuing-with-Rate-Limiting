@@ -1,0 +1,34 @@
+File Structure and Responsibilities
+
+1. /config/dbConfig.js
+Purpose: Handles the MongoDB replica set connection.
+Responsibility: Sets up the connection string to connect to multiple MongoDB nodes for fault tolerance, using mongoose.connect().
+2. /controllers/taskController.js
+Purpose: Manages the task processing logic.
+Responsibilities:
+Defines task processing functions.
+Handles logging of task completions in both the database and the log file.
+Processes tasks in a queue for each user.
+3. /middlewares/rateLimit.js
+Purpose: Implements rate-limiting for incoming tasks.
+Responsibility: Ensures that each user can only submit tasks at a limited rate (1 task per second and 20 tasks per minute), preventing overloading.
+4. /models/Task.js
+Purpose: Defines the database schema for tasks.
+Responsibility: Represents the Task model in MongoDB, defining how task data is stored in the collection (e.g., user ID and timestamp).
+5. /routes/taskRoutes.js
+Purpose: Defines API routes for task handling.
+Responsibilities:
+Defines the POST /task endpoint for queuing tasks.
+Ensures the rate-limiting middleware is applied before task processing.
+6. /utils/logger.js
+Purpose: Configures logging using Pino.
+Responsibility: Centralizes logging functionality, used to log task completions and other important events.
+7. /logs/task_log.txt
+Purpose: Stores task completion logs in plain text.
+Responsibility: Logs each task completion with a timestamp for reference.
+8. app.js
+Purpose: The main entry point for the application.
+Responsibilities:
+Sets up Express and MongoDB connection.
+Includes routes for task management.
+Initializes a task processing scheduler to run every second.
